@@ -1,6 +1,5 @@
 import logging
 from config import Config
-import threading
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -18,50 +17,11 @@ import pickle
 import time
 from os import execl
 from sys import executable
-from faker import Faker
 
-proxylist = [
-    "192.99.101.142:7497",
-    "198.50.198.93:3128",
-    "52.188.106.163:3128",
-    "20.84.57.125:3128",
-    "172.104.13.32:7497",
-    "172.104.14.65:7497",
-   "165.225.220.241:10605",
-    "165.225.208.84:10605",
-    "165.225.39.90:10605",
-    "165.225.208.243:10012",
-    "172.104.20.199:7497",
-    "165.225.220.251:80",
-    "34.110.251.255:80",
-    "159.89.49.172:7497",
-    "165.225.208.178:80",
-    "205.251.66.56:7497",
-    "139.177.203.215:3128",
-    "64.235.204.107:3128",
-    "165.225.38.68:10605",
-    "165.225.56.49:10605",
-    "136.226.75.13:10605",
-    "136.226.75.35:10605",
-    "165.225.56.50:10605",
-    "165.225.56.127:10605",
-    "208.52.166.96:5555",
-    "104.129.194.159:443",
-    "104.129.194.161:443",
-    "165.225.8.78:10458",
-    "5.161.93.53:1080",
-    "165.225.8.100:10605",
-]
-
-
-fake = Faker('en_IN')
-
-count = 0
 
 userId = Config.USERID
 
-n = 0
-def joinZoom(context, url_meet, passStr,n,count):
+def joinZoom(context, url_meet, passStr):
 
     def students(context):
         print("Running")
@@ -74,9 +34,7 @@ def joinZoom(context, url_meet, passStr,n,count):
             browser.quit()
             execl(executable, executable, "chromium.py")
     try:
-        p = proxylist[count]
-        options.add_argument(f"--proxy-server={p}")
-        browser = webdriver.Chrome(options=options,desired_capabilities = desired_cap)
+        name = "sidharth"
         browser.get('https://zoom.us')
         browser.get('https://zoom.us/wc/join/'+ url_meet)
         WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "#inputname"))).click()
@@ -89,7 +47,7 @@ def joinZoom(context, url_meet, passStr,n,count):
             pass
         for i in range(0, 20):
             browser.find_element(By.CSS_SELECTOR, "#inputname").send_keys(Keys.BACK_SPACE)
-        browser.find_element(By.CSS_SELECTOR, "#inputname").send_keys(fake)
+        browser.find_element(By.CSS_SELECTOR, "#inputname").send_keys(name)
         time.sleep(10)
         WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "#inputpasscode"))).click()
         time.sleep(10)
@@ -123,11 +81,75 @@ def joinZoom(context, url_meet, passStr,n,count):
         context.bot.send_chat_action(chat_id=userId, action=ChatAction.TYPING)
         context.bot.send_message(chat_id=userId, text="joined")
         logging.info("STAAAAPH!!")
-        count += 1
-        if count == 30:
-           count = 0
-        # n+=1
-        # time.sleep(2)
+
+        try:
+            logout = WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, "SIGN IN")))
+            print("User is logged out. Logging in them again")
+            browser.get("https://zoom.us/google_oauth_signin")
+            WebDriverWait(browser, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, ".wLBAL"))).click()
+            time.sleep(10)
+            browser.get('https://zoom.us')
+            browser.get('https://zoom.us/wc/join/'+ url_meet)
+            WebDriverWait(browser, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "#inputname"))).click()
+            for i in range(0, 20):
+                browser.find_element(By.CSS_SELECTOR, "#inputname").send_keys(Keys.BACK_SPACE)
+            browser.find_element(By.CSS_SELECTOR, "#inputname").send_keys(name)
+            WebDriverWait(browser, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, "#joinBtn"))).click()
+            print("Clicked on join button after logging in")
+
+        except NoSuchElementException:
+            print("User is already logged in. Continuing")
+        except Exception as e:
+            print(e)
+            print("Probably, Terms and policies agreement isnt asked for.")
+        try:
+            for button in WebDriverWait(browser, 20).until(EC.visibility_of_all_elements_located((By.XPATH, "//button[contains(., 'Continue')]"))):
+                 button.click()
+                 print("Trying to click the continue button")
+        except Exception as e:
+            print(e)
+            print("Is it a good error, or a bad error ? Sore wa.... yami no nakae")
+        try:
+            WebDriverWait(browser, 2400).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="inputpasscode"]'))).send_keys(passStr)
+            print("Entered the code")
+        except:
+            context.bot.send_message("Meeting didn't start. Probably Cancelled")
+
+        WebDriverWait(browser, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, "#joinBtn"))).click()
+        print("Clicked join after entering passcode")
+        time.sleep(15)
+        browser.save_screenshot("ss.png")
+        context.bot.send_chat_action(chat_id=userId, action=ChatAction.UPLOAD_PHOTO)
+        mid  = context.bot.send_photo(chat_id=userId, photo=open('ss.png', 'rb'), timeout = 120).message_id
+        os.remove('ss.png')
+        context.bot.send_chat_action(chat_id=userId, action=ChatAction.TYPING)
+        context.bot.send_message(chat_id=userId, text="Attending you lecture. You can chill :v")
+        logging.info("STAAAAPH!!")
+#Join Audio Part
+        try:
+             action = webdriver.ActionChains(browser)
+             action.move_by_offset(100, 100).perform()
+             WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".join-audio-container__btn"))).click()
+             WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".join-audio-by-voip"))).click()
+             WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".join-dialog__close"))).click()
+        except Exception as e:
+             print(e)
+             print("Maybe the dialog got closed by itself, or the website layout has changed ?")
+#########
+#        context.bot.delete_message(chat_id=userId ,message_id = mid)
+#        browser.save_screenshot("ss.png")
+#        context.bot.send_chat_action(chat_id=userId, action=ChatAction.UPLOAD_PHOTO)
+#        mid = context.bot.send_photo(chat_id=userId, photo=open('ss.png', 'rb'), timeout = 120).message_id
+#        os.remove('ss.png')
+
+        WebDriverWait(browser, 1000).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="voip-tab"]/div/button'))).click()
+
+        WebDriverWait(browser, 1000).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="wc-footer"]/div/div[2]/button[1]'))).click()
+
+        WebDriverWait(browser, 1000).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="wc-container-right"]/div/div[2]/div/button[2]'))).click()
+
+        WebDriverWait(browser, 10).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, ".join-audio-by-voip__join-btn"))).click()
 
 
     except Exception as e:
@@ -140,15 +162,7 @@ def joinZoom(context, url_meet, passStr,n,count):
 
     j = updater.job_queue
     j.run_repeating(students, 20, 1000)
-    
-    
-while n < 0:
-    a = threading.Thread(target=fun, args=(n, count,))
-    a.start()
-    n += 1
-    time.sleep(20)
 
-input()
 
 @run_async
 def zoom(update, context):
@@ -158,5 +172,4 @@ def zoom(update, context):
 
     url_meet = update.message.text.split()[1]
     passStr = update.message.text.split()[2]
-    number = update.message.text.split()[3]
     joinZoom(context, url_meet, passStr)
