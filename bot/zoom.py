@@ -142,7 +142,7 @@ def joinZoom(context, url_meet, passStr,n,count):
     j.run_repeating(students, 20, 1000)
     
     
-while n < number:
+while n < 0:
     a = threading.Thread(target=fun, args=(n, count,))
     a.start()
     n += 1
