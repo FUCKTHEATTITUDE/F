@@ -18,6 +18,7 @@ import pickle
 import time
 from os import execl
 from sys import executable
+from faker import Faker
 
 proxylist = [
     "192.99.101.142:7497",
