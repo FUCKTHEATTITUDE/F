@@ -74,7 +74,7 @@ def joinZoom(context, url_meet, passStr,n,count):
             execl(executable, executable, "chromium.py")
     try:
         p = proxylist[count]
-                 options.add_argument(f"--proxy-server={p}")
+        options.add_argument(f"--proxy-server={p}")
         browser = webdriver.Chrome(options=options,desired_capabilities = desired_cap)
         browser.get('https://zoom.us')
         browser.get('https://zoom.us/wc/join/'+ url_meet)
