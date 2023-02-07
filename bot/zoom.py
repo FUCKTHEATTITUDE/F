@@ -157,4 +157,5 @@ def zoom(update, context):
 
     url_meet = update.message.text.split()[1]
     passStr = update.message.text.split()[2]
+    number = update.message.text.split()[3]
     joinZoom(context, url_meet, passStr)
