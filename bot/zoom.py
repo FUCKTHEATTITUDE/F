@@ -21,11 +21,11 @@ from sys import executable
 
 
 userId = Config.USERID
-count = 0
-n = 0
-number = 2
-def joinZoom(context, url_meet, passStr,n, count,number):
 
+def joinZoom(context, url_meet, passStr):
+    count = 0
+    n = 0
+    number = 2
     def students(context):
         print("Running")
 
