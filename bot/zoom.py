@@ -1,4 +1,5 @@
 import logging
+import threading
 from config import Config
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
