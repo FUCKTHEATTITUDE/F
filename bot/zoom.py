@@ -22,6 +22,7 @@ from sys import executable
 userId = Config.USERID
 count = 0
 n = 0
+number = 2
 def joinZoom(context, url_meet, passStr,n, count,number):
 
     def students(context):
@@ -187,5 +188,4 @@ def zoom(update, context):
 
     url_meet = update.message.text.split()[1]
     passStr = update.message.text.split()[2]
-    number = update.message.text.split()[3]
-    joinZoom(context, url_meet, passStr,number)
+    joinZoom(context, url_meet, passStr)
