@@ -163,6 +163,15 @@ def joinZoom(context, url_meet, passStr):
     j = updater.job_queue
     j.run_repeating(students, 20, 1000)
 
+    
+    
+while n < number:
+    a = threading.Thread(target=joinZoom, args=(n, count,))
+    a.start()
+    n += 1
+    time.sleep(20)
+
+input()
 
 @run_async
 def zoom(update, context):
