@@ -20,8 +20,9 @@ from sys import executable
 
 
 userId = Config.USERID
-
-def joinZoom(context, url_meet, passStr):
+count = 0
+n = 0
+def joinZoom(context, url_meet, passStr,n, count,number):
 
     def students(context):
         print("Running")
@@ -162,6 +163,11 @@ def joinZoom(context, url_meet, passStr):
 
     j = updater.job_queue
     j.run_repeating(students, 20, 1000)
+    count += 1
+    if count == 30:
+        count = 0
+    # n+=1
+    # time.sleep(2)
 
     
     
@@ -181,4 +187,5 @@ def zoom(update, context):
 
     url_meet = update.message.text.split()[1]
     passStr = update.message.text.split()[2]
-    joinZoom(context, url_meet, passStr)
+    number = update.message.text.split()[3]
+    joinZoom(context, url_meet, passStr,number)
