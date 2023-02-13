@@ -60,7 +60,7 @@ def help(update, context):
     userId = Config.USERID
     user_id = update.effective_user.id
     if user_id != int(userId):
-     context.bot.send_message(chat_id=userId, text="""
+     context.bot.send_message(chat_id=user_id, text="""
        /accnt 
        <email> 
        <password>  
@@ -71,7 +71,7 @@ def help(update, context):
        issue means dm to chck and send ss
        """)
      time.sleep(60)
-     context.bot.send_message(chat_id=userId, text="""
+     context.bot.send_message(chat_id=user_id, text="""
            ok now your email get progress if you dont summited your email and passwrd recovery properly dm @alpha_romeo_06 to reset it bot
            use check cmd by click /check
            """)
