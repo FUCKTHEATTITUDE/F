@@ -114,7 +114,7 @@ def main():
         dp.add_handler(CommandHandler("timetable", timeTable))
 
     dp.add_handler(CommandHandler("exit", exit))
-    dp.add_handler(CommandHandler("check", status))
+    dp.add_handler(CommandHandler("check", check))
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(CommandHandler("start", start))
     logging.info("Bot started")
