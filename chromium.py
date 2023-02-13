@@ -47,22 +47,20 @@ def start(update, context):
     if user_id != int(userId):
         print("Unauthorized access denied for {0}. Allowed users: {1}".format(user_id, userId))
         context.bot.send_message(chat_id=user_id,
-                                 text="You are not authorized to use this bot! Make your own zoom member bot contact @alpha_romeo_06")
+                                 text="your account recovery paskey bot in progress issue only  contact otherwise don't distrub @alpha_romeo_06")
+        context.bot.send_message(chat_id=userId,
+                                 text=" Unauthorized access denied for {0}. Allowed users: {1}".format(user_id, userId))
         return
     else:
           context.bot.send_message(chat_id=user_id,
-                                 text='''now you was auth by my owner welcome to zoom bot you can attend zoom meetings by this bot !
-                                  join multiple zoom members by this  bot contact @alpha_romeo_06 or use /help''')
+                                 text='''everything will be done make a sever to run it''')
 
 @run_async
 def help(update, context):
     context.bot.send_message(chat_id=userId, text="""
-/zoom <userID> <password>  
+/accnt <userID> <password>  
 you dont have premium pack to use count mode
-/count <number> now curently disabled by @alpha_romeo_06
-/exit -   Exit the meeting and restart
-/status -   Send screenshot
-/help -   Send this help message""")
+""")
 
 
 def main():
