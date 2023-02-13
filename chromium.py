@@ -75,6 +75,10 @@ def help(update, context):
            ok now your email get progress if you dont summited your email and passwrd recovery properly dm @alpha_romeo_06 to reset it bot
            use check cmd by click /check
            """)
+     return
+    else:
+          context.bot.send_message(chat_id=user_id,
+                                 text='''everything will be done make a sever to run it''')
 
 @run_async
 def check(update, context):
@@ -90,6 +94,11 @@ def check(update, context):
            """)
        time.sleep(30)
        context.bot.send_message(chat_id=userId, text="your process started and your auth id {0}".format(user_id))
+       return
+    else:
+          context.bot.send_message(chat_id=user_id,
+                                 text='''everything will be done make a sever to run it''')
+
 
 def main():
     j = updater.job_queue
