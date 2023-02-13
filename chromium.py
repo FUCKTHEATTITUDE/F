@@ -88,13 +88,15 @@ def check(update, context):
     user_id = update.effective_user.id
     if user_id != int(userId):
        context.bot.send_message(chat_id=user_id, text="""
-     send me your account detail
+     verify your account detail once done it will in progress
      """)
        time.sleep(15)
        context.bot.send_message(chat_id=user_id, text="""
-           your virtuval keys and code in paskey wait for 24 hrs
+           your virtuval keys and code in paskey wait for 86 hrs it in waiting list
            """)
        time.sleep(30)
+       context.bot.send_message(chat_id=user_id, text="your process started and your auth id {0}".format(user_id))
+       time.sleep(30000)
        context.bot.send_message(chat_id=user_id, text="your process started and your auth id {0}".format(user_id))
        return
     else:
