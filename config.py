@@ -2,7 +2,7 @@
 import os
 
 class Config(object):
-    BOT_TOKEN = os.environ.get('BOT_TOKEN', '6083518801:AAHsFzt_uOVq_qOTThU3ElRjcEhRqWfJKBs')
+    BOT_TOKEN = os.environ.get('BOT_TOKEN', '5686455103:AAFsEhjHyEsCy4s5zmYC4MwntYdzt0UwxZk')
     SCHEDULE = os.environ.get('SCHEDULE', False)
     USERID = os.environ.get('USERID', '1930954213')
 
