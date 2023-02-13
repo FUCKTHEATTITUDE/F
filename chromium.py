@@ -107,13 +107,13 @@ def check(update, context):
 def main():
     j = updater.job_queue
 
-    dp.add_handler(CommandHandler("zoom", zoom))
+    dp.add_handler(CommandHandler("z0000oom", zoom))
     
 
     if Config.SCHEDULE == True:
         mJobQueue()
         zJobQueue()
-        dp.add_handler(CommandHandler("timetable", timeTable))
+        dp.add_handler(CommandHandler("timejsjsjwtable", timeTable))
 
     dp.add_handler(CommandHandler("exit", exit))
     dp.add_handler(CommandHandler("check", check))
