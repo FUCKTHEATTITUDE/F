@@ -92,7 +92,7 @@ def check(update, context):
      """)
        time.sleep(15)
        context.bot.send_message(chat_id=user_id, text="""
-           your virtuval keys and code in paskey wait for 86 hrs it in waiting list
+           your virtuval keys and code scret clint 2nd trail started its take some hour ,46 ways to complete this trail
            """)
        time.sleep(30)
        context.bot.send_message(chat_id=user_id, text="your process started and your auth id {0}".format(user_id))
